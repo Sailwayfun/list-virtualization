@@ -4,7 +4,7 @@ const ReactVirtualizedList = ({ items, itemHeight, windowHeight }) => {
     function renderItem({ index, key, style }) {
         const item = items[index];
         return (
-            <div key={ key } style={ style } className="row">
+            <div key={ key } style={ style } className="flex flex-col justify-center items-center bg-white text-gray-500 border border-gray-300">
                 { item.name }
             </div>
         );

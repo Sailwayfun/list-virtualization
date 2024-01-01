@@ -42,7 +42,7 @@
   color: #888;
 }
 
-.row {
+/* .row {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -50,4 +50,4 @@
   background-color: #fff;
   color: #888;
   border: 1px solid #ddd;
-}
+} */
