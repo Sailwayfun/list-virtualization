@@ -1,6 +1,8 @@
 import './App.css';
+import 'react-virtualized/styles.css';
 // import SimpleVirtualizedList from './component/SimpleVirtualizedList';
-import ContentVisibilityAutoList from './component/ContentVisibilityAutoList';
+// import ContentVisibilityAutoList from './component/ContentVisibilityAutoList';
+import ReactVirtualizedList from './component/ReactVirtualizedList';
 import { useState, useEffect } from 'react';
 
 function App() {
@@ -39,7 +41,8 @@ function App() {
         windowHeight={ 500 }
         renderItem={ renderItem }
       /> */}
-      <ContentVisibilityAutoList items={ items } itemHeight={ itemHeight } windowHeight={ 500 } />
+      {/* <ContentVisibilityAutoList items={ items } itemHeight={ itemHeight } windowHeight={ 500 } /> */ }
+      <ReactVirtualizedList items={ items } itemHeight={ itemHeight } windowHeight={ 500 } />
     </>
   );
 }
