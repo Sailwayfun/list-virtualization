@@ -18,3 +18,10 @@ This is a project exploring how to render large lists in React apps more perform
 補充：可以在 list-item 上另外加上`contain-intrinsic-size`，這是一個告訴瀏覽器元素不在可視範圍內時，placeholder 的高度和寬度，可以稍微提高滾動時的效能。
 
 <img src="src/assets/use-css.gif" alt="content-visibility-auto" />
+
+### React-Virtualized
+React-Virtualized是一個專門處理list-virtualization的套件。它透過List等component建立可滾動的window，提供list和list item的基礎樣式，並可自己客製化調整。透過```import 'react-virtualized/styles.css';``` 這張stylesheet，可以讓使用者額外使用Tailwind等工具來客製化列表的樣式。它的運作和上面no-library是差不多的，都是用絕對定位的items在相對定位的容器裡面滾動，但是我們不用自己計算scroll top，也不用寫onScroll的事件處理，只要定好itemHeight, itemCount, windowHeight，以及render單一item的renderer function即可，非常方便。
+但是和Vite不太兼容，直接使用會有一個bug，可以透過修改Vite config來解決。
+
+<img src="src/assets/react-virtualized-list.gif" alt="content-visibility-auto" />
+
