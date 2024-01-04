@@ -1,8 +1,8 @@
 import './App.css';
 import 'react-virtualized/styles.css';
-// import SimpleVirtualizedList from './component/SimpleVirtualizedList';
+import SimpleVirtualizedList from './component/SimpleVirtualizedList';
 // import ContentVisibilityAutoList from './component/ContentVisibilityAutoList';
-import ReactVirtualizedList from './component/ReactVirtualizedList';
+// import ReactVirtualizedList from './component/ReactVirtualizedList';
 import { useState, useEffect } from 'react';
 
 function App() {
@@ -20,29 +20,29 @@ function App() {
     setItems(newItems);
   }, []);
 
-  // function renderItem(startIndex, endIndex) {
-  //   const renderedItems = [];
-  //   for (let i = startIndex; i <= endIndex; i++) {
-  //     const item = items[i];
-  //     renderedItems.push(
-  //       <div key={ item.id } style={ { position: "absolute", top: `${i * itemHeight}px`, width: "100%", height: `${itemHeight}px`, lineHeight: `${itemHeight}px`, textAlign: "center", border: "1px solid #ccc" } }>
-  //         { item.name }
-  //       </div>
-  //     );
-  //   }
-  //   return renderedItems;
-  // }
+  function renderItem(startIndex, endIndex) {
+    const renderedItems = [];
+    for (let i = startIndex; i <= endIndex; i++) {
+      const item = items[i];
+      renderedItems.push(
+        <div key={ item.id } style={ { position: "absolute", top: `${i * itemHeight}px`, width: "100%", height: `${itemHeight}px`, lineHeight: `${itemHeight}px`, textAlign: "center", border: "1px solid #ccc" } }>
+          { item.name }
+        </div>
+      );
+    }
+    return renderedItems;
+  }
 
   return (
     <>
       <h1>List Virtualization</h1>
-      {/* <SimpleVirtualizedList itemCount={ items.length }
+      <SimpleVirtualizedList itemCount={ items.length }
         itemHeight={ itemHeight }
         windowHeight={ 500 }
         renderItem={ renderItem }
-      /> */}
+      />
       {/* <ContentVisibilityAutoList items={ items } itemHeight={ itemHeight } windowHeight={ 500 } /> */ }
-      <ReactVirtualizedList items={ items } itemHeight={ itemHeight } windowHeight={ 500 } />
+      {/* <ReactVirtualizedList items={ items } itemHeight={ itemHeight } windowHeight={ 500 } /> */}
     </>
   );
 }
