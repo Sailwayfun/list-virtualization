@@ -1,10 +1,16 @@
 import { useState, useMemo } from 'react';
 
 
-const SimpleVirtualizedList = ({ itemCount, itemHeight, windowHeight, renderItem }) => {
+const SimpleVirtualizedList = ({ itemCount, itemHeight, windowHeight, renderItem, loadNextPage, pageNum }) => {
     const [scrollTop, setScrollTop] = useState(0);
     function handleScroll(e) {
         setScrollTop(e.target.scrollTop);
+        const PAGE_COUNT = 168;
+        const hasMoreData = pageNum < PAGE_COUNT;
+        const hasMoreItem = e.target.scrollTop + windowHeight >= itemHeight * itemCount;
+        if (hasMoreItem && hasMoreData) {
+            loadNextPage();
+        }
     }
     const innerHeight = useMemo(() => itemCount * itemHeight, [itemCount, itemHeight]);
     const startIndex = Math.floor(scrollTop / itemHeight);//window上方的高度除以每個item的高度，得到的數字就是目前在window上方的item數量
