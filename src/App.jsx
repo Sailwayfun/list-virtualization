@@ -8,7 +8,7 @@ import { useMovies } from './hooks/useMovies';
 
 function App() {
   const initialPageNum = 1;
-  const itemHeight = 80;
+  const itemHeight = 40;
   const { items, loadNextPage, pageNum } = useMovies(initialPageNum);
 
   function renderItem(startIndex, endIndex) {
@@ -18,7 +18,7 @@ function App() {
       renderedItems.push(
         <div key={ item.id } className="absolute w-full text-center border border-gray-500" style={ { top: `${i * itemHeight}px`, height: `${itemHeight}px`, lineHeight: `${itemHeight}px` } }>
           <div className="flex items-center text-ellipsis gap-2 pr-3">
-            <img src={ `https://image.tmdb.org/t/p/original/${item.poster}` } className="w-16 h-20" />
+            <img src={ `https://image.tmdb.org/t/p/original/${item.poster}` } className="w-8 h-10" />
             <p>{ item.title }</p>
             <p className="ml-auto">Release Date: { item.release_date }</p>
           </div>
@@ -29,7 +29,7 @@ function App() {
   }
 
   return (
-    <div className="w-4/5 flex justify-center p-10 flex-col">
+    <div className="w-full flex justify-center p-10 flex-col">
       <h1 className="pb-6">List Virtualization</h1>
       <SimpleVirtualizedList itemCount={ items.length }
         itemHeight={ itemHeight }
