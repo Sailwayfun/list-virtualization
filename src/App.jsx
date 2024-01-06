@@ -11,7 +11,7 @@ function App() {
   const itemHeight = 40;
   const { items, loadNextPage, pageNum } = useMovies(initialPageNum);
 
-  function renderItem(startIndex, endIndex) {
+  function renderItems(startIndex, endIndex) {
     const renderedItems = [];
     for (let i = startIndex; i <= endIndex; i++) {
       const item = items[i];
@@ -34,7 +34,7 @@ function App() {
       <SimpleVirtualizedList itemCount={ items.length }
         itemHeight={ itemHeight }
         windowHeight={ 800 }
-        renderItem={ renderItem }
+        renderItems={ renderItems }
         loadNextPage={ loadNextPage }
         pageNum={ pageNum }
       />

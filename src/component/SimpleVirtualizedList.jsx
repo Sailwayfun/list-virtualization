@@ -1,7 +1,7 @@
 import { useState, useMemo, useRef } from 'react';
 
 
-const SimpleVirtualizedList = ({ itemCount, itemHeight, windowHeight, renderItem, loadNextPage, pageNum }) => {
+const SimpleVirtualizedList = ({ itemCount, itemHeight, windowHeight, renderItems, loadNextPage, pageNum }) => {
     const [scrollTop, setScrollTop] = useState(0);
     const scrollContainerRef = useRef(null);
     function handleScroll(e) {
@@ -19,7 +19,7 @@ const SimpleVirtualizedList = ({ itemCount, itemHeight, windowHeight, renderItem
     return (
         <div ref={ scrollContainerRef } onScroll={ handleScroll } className="scroll" style={ { overflowY: "scroll", height: `${windowHeight}px` } }>
             <div className="inner" style={ { position: "relative", height: `${innerHeight}px` } }>
-                { renderItem(startIndex, endIndex) }
+                { renderItems(startIndex, endIndex) }
             </div>
         </div>
     );
