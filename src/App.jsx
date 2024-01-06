@@ -30,7 +30,7 @@ function App() {
 
   return (
     <div className="w-full flex justify-center p-10 flex-col">
-      <h1 className="pb-6">List Virtualization</h1>
+      <h1 className="pb-6 text-3xl font-bold">List Virtualization</h1>
       <SimpleVirtualizedList itemCount={ items.length }
         itemHeight={ itemHeight }
         windowHeight={ 800 }
