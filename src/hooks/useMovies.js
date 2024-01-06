@@ -7,6 +7,7 @@ function getApiEndpoint(pageNum) {
 function useMovies(initialPageNum) {
     const [items, setItems] = useState([]);
     const [pageNum, setPageNum] = useState(initialPageNum);
+    const [isLoading, setIsLoading] = useState(false);
     useEffect(() => {
         const options = {
             method: 'GET',
@@ -30,8 +31,14 @@ function useMovies(initialPageNum) {
                 setItems(newItems);
             });
     }, [pageNum]);
-    const loadNextPage = () => {
+    const loadNextPage = (scrollContainerRef) => {
+        if (isLoading) return;
+        setIsLoading(true);
         setPageNum((prev) => prev + 1);
+        if (scrollContainerRef) {
+            scrollContainerRef.current.scrollTop = scrollContainerRef.current.scrollHeight - scrollContainerRef.current.clientHeight - 100;
+        }
+        setIsLoading(false);
     };
     return { items, setItems, loadNextPage, pageNum };
 }
