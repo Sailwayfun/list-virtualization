@@ -11,7 +11,7 @@ function App() {
 
   useEffect(() => {
     const getUsers = async () => {
-      const url = `https://randomuser.me/api/?page=${page}&results=100`;
+      const url = `https://randomuser.me/api/?page=${page}&results=1000`;
       const response = await fetch(url);
       const data = await response.json();
       return data.results;
@@ -30,7 +30,7 @@ function App() {
   }, [page]);
 
   const loadMoreUsers = () => {
-    setPage(prevPage => prevPage + 150);
+    setPage(prevPage => prevPage + 1);
   };
 
   function renderItems(startIndex, endIndex) {
