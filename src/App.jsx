@@ -1,6 +1,6 @@
 import './App.css';
 import SimpleVirtualizedList from './component/SimpleVirtualizedList';
-// import ContentVisibilityAutoList from './component/ContentVisibilityAutoList';
+import ContentVisibilityAutoList from './component/ContentVisibilityAutoList';
 import { useState, useEffect } from 'react';
 
 function App() {
@@ -22,7 +22,14 @@ function App() {
     const allItems = [...items];
     const renderedItems = allItems.slice(startIndex, endIndex + 1).map((item, index) => {
       return (
-        <div key={ item.id } style={ { position: "absolute", top: `${(index + startIndex) * itemHeight}px`, width: "100%", height: `${itemHeight}px`, lineHeight: `${itemHeight}px`, textAlign: "center", border: "1px solid #ccc" } }>
+        <div key={ item.id } style={ {
+          position: "absolute",
+          top: `${(index + startIndex) * itemHeight}px`,
+          width: "100%", height: `${itemHeight}px`,
+          lineHeight: `${itemHeight}px`,
+          textAlign: "center",
+          border: "1px solid #ccc"
+        } }>
           { item.name }
         </div>
       );
@@ -33,12 +40,15 @@ function App() {
   return (
     <>
       <h1>List Virtualization</h1>
-      <SimpleVirtualizedList itemCount={ items.length }
-        itemHeight={ itemHeight }
-        windowHeight={ 500 }
-        renderItems={ renderItems }
-      />
-      {/* <ContentVisibilityAutoList items={ items } itemHeight={ itemHeight } windowHeight={ 500 } /> */ }
+      <div style={ { display: "flex", gap: "12px" } }>
+        <SimpleVirtualizedList itemCount={ items.length }
+          itemHeight={ itemHeight }
+          windowHeight={ 500 }
+          renderItems={ renderItems }
+        />
+        <ContentVisibilityAutoList items={ items } itemHeight={ itemHeight } windowHeight={ 500 } />
+      </div>
+
     </>
   );
 }
