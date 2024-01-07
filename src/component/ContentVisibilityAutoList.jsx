@@ -1,7 +1,8 @@
-const ContentVisibilityAutoList = ({ items, itemHeight, windowHeight }) => {
+const ContentVisibilityAutoList = ({ items, itemHeight, windowHeight, duration }) => {
     return (
         <div style={ { display: "flex", flexDirection: "column" } }>
             <h2>content-visibility:auto</h2>
+            <p>Render Time: { duration }</p>
             <div style={ {
                 overflowY: "scroll",
                 position: "relative",

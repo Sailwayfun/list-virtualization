@@ -1,7 +1,8 @@
-const NormalList = ({ items, itemHeight }) => {
+const NormalList = ({ items, itemHeight, duration }) => {
     return (
         <div style={ { display: "flex", flexDirection: "column" } }>
             <h2>normal</h2>
+            <p>Render Time: { duration }</p>
             <div style={ { overflowY: "scroll", position: "relative", height: "500px", width: "100%" } }>
                 { items.map((item, index) => {
                     return (

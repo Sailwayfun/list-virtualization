@@ -1,13 +1,17 @@
 import './App.css';
 import SimpleVirtualizedList from './component/SimpleVirtualizedList';
 import ContentVisibilityAutoList from './component/ContentVisibilityAutoList';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import NormalList from './component/NormalList';
+import { Profiler } from 'react';
 
 function App() {
   const [users, setUsers] = useState([]);
   const [page, setPage] = useState(1);
   const itemHeight = 50;
+  const simpleVirtualizedList = useRef(null);
+  const contentVisibilityAutoList = useRef(null);
+  const normalList = useRef(null);
 
   useEffect(() => {
     const getUsers = async () => {
@@ -33,6 +37,22 @@ function App() {
     setPage(prevPage => prevPage + 1);
   };
 
+  function profileComponent(id, _, actualDuration) {
+    switch (id) {
+      case "SimpleVirtualizedList":
+        simpleVirtualizedList.current = actualDuration;
+        break;
+      case "ContentVisibilityAutoList":
+        contentVisibilityAutoList.current = actualDuration;
+        break;
+      case "NormalList":
+        normalList.current = actualDuration;
+        break;
+      default:
+        break;
+    }
+  }
+
   function renderItems(startIndex, endIndex) {
     const allItems = [...users];
     const renderedItems = allItems.slice(startIndex, endIndex + 1).map((item, index) => {
@@ -47,7 +67,9 @@ function App() {
           display: "flex",
           alignItems: "center",
         } }>
-          <img src={ item.picture } alt="random" style={ { marginRight: "10px", width: "40px", height: "40px" } } />
+          <img src={ item.picture }
+            alt="random"
+            style={ { marginRight: "10px", width: "40px", height: "40px" } } />
           { item.name }
         </div>
       );
@@ -59,16 +81,32 @@ function App() {
     <>
       <h1>List Virtualization</h1>
       <div style={ { display: "grid", gap: "12px", gridTemplateColumns: "repeat(3, 1fr)" } }>
-        <SimpleVirtualizedList itemCount={ users.length }
-          itemHeight={ itemHeight }
-          windowHeight={ 500 }
-          renderItems={ renderItems }
-        />
-        <ContentVisibilityAutoList items={ users } itemHeight={ itemHeight } windowHeight={ 500 } />
-        <NormalList items={ users } itemHeight={ itemHeight } />
+        <Profiler id="SimpleVirtualizedList" onRender={ profileComponent }>
+          <SimpleVirtualizedList itemCount={ users.length }
+            itemHeight={ itemHeight }
+            windowHeight={ 500 }
+            renderItems={ renderItems }
+            duration={ simpleVirtualizedList.current }
+          />
+        </Profiler>
+        <Profiler id="ContentVisibilityAutoList" onRender={ profileComponent }>
+          <ContentVisibilityAutoList
+            items={ users }
+            itemHeight={ itemHeight }
+            windowHeight={ 500 }
+            duration={ contentVisibilityAutoList.current }
+          />
+        </Profiler>
+        <Profiler id="NormalList" onRender={ profileComponent }>
+          <NormalList
+            items={ users }
+            itemHeight={ itemHeight }
+            duration={ normalList.current }
+          />
+        </Profiler>
       </div>
       <div style={ { display: "flex", gap: "10px", justifyContent: "center", paddingTop: "10px" } }>
-        <button style={ { padding: "15px 30px" } } onClick={ () => loadMoreUsers() }>Load More Users</button>
+        <button style={ { padding: "15px 30px", cursor: "pointer" } } onClick={ () => loadMoreUsers() }>Load More Users</button>
       </div>
     </>
   );

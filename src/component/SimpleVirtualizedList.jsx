@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 
 
-const SimpleVirtualizedList = ({ itemCount, itemHeight, windowHeight, renderItems }) => {
+const SimpleVirtualizedList = ({ itemCount, itemHeight, windowHeight, renderItems, duration }) => {
     const [scrollTop, setScrollTop] = useState(0);
     function handleScroll(e) {
         setScrollTop(e.target.scrollTop);
@@ -12,6 +12,7 @@ const SimpleVirtualizedList = ({ itemCount, itemHeight, windowHeight, renderItem
     return (
         <div style={ { display: "flex", flexDirection: "column" } }>
             <h2>onScroll and position</h2>
+            <p>Render Time: { duration }</p>
             <div onScroll={ handleScroll } className="scroll"
                 style={ {
                     overflowY: "scroll",
