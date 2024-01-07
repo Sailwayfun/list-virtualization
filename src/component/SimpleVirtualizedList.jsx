@@ -12,7 +12,12 @@ const SimpleVirtualizedList = ({ itemCount, itemHeight, windowHeight, renderItem
     return (
         <div style={ { display: "flex", flexDirection: "column" } }>
             <h2>onScroll and position</h2>
-            <div onScroll={ handleScroll } className="scroll" style={ { overflowY: "scroll", height: `${windowHeight}px`, width: "100%" } }>
+            <div onScroll={ handleScroll } className="scroll"
+                style={ {
+                    overflowY: "scroll",
+                    height: `${windowHeight}px`,
+                    width: "100%"
+                } }>
                 <div className="inner" style={ { position: "relative", height: `${innerHeight}px` } }>
                     { renderItems(startIndex, endIndex) }
                 </div>

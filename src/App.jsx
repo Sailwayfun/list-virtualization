@@ -5,22 +5,36 @@ import { useState, useEffect } from 'react';
 import NormalList from './component/NormalList';
 
 function App() {
-  const [items, setItems] = useState([]);
-  const ITEM_COUNT = 2000;
+  const [users, setUsers] = useState([]);
+  const [page, setPage] = useState(1);
   const itemHeight = 50;
 
   useEffect(() => {
-    const newItems = new Array(ITEM_COUNT).fill(true).map((_, index) => {
-      return {
-        id: index,
-        name: `Item ${index}`,
-      };
+    const getUsers = async () => {
+      const url = `https://randomuser.me/api/?page=${page}&results=50`;
+      const response = await fetch(url);
+      const data = await response.json();
+      return data.results;
+    };
+
+    getUsers().then(newUsers => {
+      const formattedUsers = newUsers.map((user, index) => {
+        return {
+          id: index,
+          name: `${user.name.first} ${user.name.last}`,
+          picture: user.picture.thumbnail,
+        };
+      });
+      setUsers(prevUsers => [...prevUsers, ...formattedUsers]);
     });
-    setItems(newItems);
-  }, []);
+  }, [page]);
+
+  const loadMoreUsers = () => {
+    setPage(prevPage => prevPage + 100);
+  };
 
   function renderItems(startIndex, endIndex) {
-    const allItems = [...items];
+    const allItems = [...users];
     const renderedItems = allItems.slice(startIndex, endIndex + 1).map((item, index) => {
       return (
         <div key={ item.id } style={ {
@@ -29,8 +43,11 @@ function App() {
           width: "100%", height: `${itemHeight}px`,
           lineHeight: `${itemHeight}px`,
           textAlign: "center",
-          border: "1px solid #ccc"
+          border: "1px solid #ccc",
+          display: "flex",
+          alignItems: "center",
         } }>
+          <img src={ item.picture } alt="random" style={ { marginRight: "10px", width: "40px", height: "40px" } } />
           { item.name }
         </div>
       );
@@ -42,15 +59,17 @@ function App() {
     <>
       <h1>List Virtualization</h1>
       <div style={ { display: "grid", gap: "12px", gridTemplateColumns: "repeat(3, 1fr)" } }>
-        <SimpleVirtualizedList itemCount={ items.length }
+        <SimpleVirtualizedList itemCount={ users.length }
           itemHeight={ itemHeight }
           windowHeight={ 500 }
           renderItems={ renderItems }
         />
-        <ContentVisibilityAutoList items={ items } itemHeight={ itemHeight } windowHeight={ 500 } />
-        <NormalList items={ items } itemHeight={ itemHeight } />
+        <ContentVisibilityAutoList items={ users } itemHeight={ itemHeight } windowHeight={ 500 } />
+        <NormalList items={ users } itemHeight={ itemHeight } />
       </div>
-
+      <div style={ { display: "flex", gap: "10px", justifyContent: "center", paddingTop: "10px" } }>
+        <button style={ { padding: "15px 30px" } } onClick={ () => loadMoreUsers() }>Load More Users</button>
+      </div>
     </>
   );
 }
