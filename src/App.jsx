@@ -2,6 +2,7 @@ import './App.css';
 import SimpleVirtualizedList from './component/SimpleVirtualizedList';
 import ContentVisibilityAutoList from './component/ContentVisibilityAutoList';
 import { useState, useEffect } from 'react';
+import NormalList from './component/NormalList';
 
 function App() {
   const [items, setItems] = useState([]);
@@ -40,13 +41,14 @@ function App() {
   return (
     <>
       <h1>List Virtualization</h1>
-      <div style={ { display: "flex", gap: "12px" } }>
+      <div style={ { display: "grid", gap: "12px", gridTemplateColumns: "repeat(3, 1fr)" } }>
         <SimpleVirtualizedList itemCount={ items.length }
           itemHeight={ itemHeight }
           windowHeight={ 500 }
           renderItems={ renderItems }
         />
         <ContentVisibilityAutoList items={ items } itemHeight={ itemHeight } windowHeight={ 500 } />
+        <NormalList items={ items } itemHeight={ itemHeight } />
       </div>
 
     </>
